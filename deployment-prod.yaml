@@ -26,6 +26,7 @@ spec:
   selector:
     app: nginx-prod
   type: LoadBalancer
+  loadBalancerIP: 10.48.228.117
   ports:
   - protocol: TCP
     port: 80
