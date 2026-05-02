@@ -63,6 +63,7 @@ pipeline {
         stage('Acceptance Tests') {
             steps {
                 script {
+                    sh "sleep 10"
                     sh "docker run --rm -v ${WORKSPACE}:/workdir joyzoursky/python-chromedriver:3.9-selenium python3 /workdir/selenium-test.py"
                 }
             }
