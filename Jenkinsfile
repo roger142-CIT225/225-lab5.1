@@ -11,6 +11,15 @@ pipeline {
 
     stages {
 
+        stage('Cleanup Old Services') {
+            steps {
+                script {
+                    sh "kubectl delete service prod-service || true"
+                    sh "kubectl delete service dev-service || true"
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']],
