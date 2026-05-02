@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -12,7 +11,6 @@ pipeline {
 
     stages {
 
-        // Lab 3-1: Checkout from GitHub
         stage('Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']],
@@ -20,14 +18,12 @@ pipeline {
             }
         }
 
-        // Lab 3-3 / 3-5: HTML linting — pipeline stops if this fails
         stage('Lint HTML') {
             steps {
-                sh 'docker run --rm -v $(pwd):/workdir cytopia/htmlhint htmlhint /workdir/index.html'
+                sh 'docker run --rm -v $(pwd):/workdir node:18-alpine sh -c "npm install -g htmlhint --silent && htmlhint /workdir/index.html"'
             }
         }
 
-        // Lab 3-1: Build Docker image
         stage('Build Docker Image') {
             steps {
                 script {
@@ -36,7 +32,6 @@ pipeline {
             }
         }
 
-        // Lab 3-1: Push to Docker Hub
         stage('Push Docker Image') {
             steps {
                 script {
@@ -47,7 +42,6 @@ pipeline {
             }
         }
 
-        // Lab 3-1 / 3-2: Deploy to DEV using NodePort
         stage('Deploy to Dev') {
             steps {
                 script {
@@ -57,7 +51,6 @@ pipeline {
             }
         }
 
-        // Lab 3-6: Selenium acceptance test against DEV
         stage('Acceptance Tests') {
             steps {
                 script {
@@ -66,7 +59,6 @@ pipeline {
             }
         }
 
-        // Lab 3-7: DAST security scan with DASTardly
         stage('DAST Security Scan') {
             steps {
                 script {
@@ -81,7 +73,6 @@ pipeline {
             }
         }
 
-        // Lab 3-4 / MetalLB: Deploy to PROD using LoadBalancer
         stage('Deploy to Prod') {
             steps {
                 script {
@@ -91,7 +82,6 @@ pipeline {
             }
         }
 
-        // Lab 3-1: Verify cluster state
         stage('Check Kubernetes Cluster') {
             steps {
                 script {
@@ -101,7 +91,6 @@ pipeline {
         }
     }
 
-    // Lab 3-2: Slack notifications
     post {
         success {
             slackSend color: 'good',
