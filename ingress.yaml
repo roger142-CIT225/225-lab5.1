@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dev-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: roger142-dev.cit225.miamioh.edu
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dev-service
+            port:
+              number: 80
