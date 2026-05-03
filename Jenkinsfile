@@ -57,6 +57,8 @@ pipeline {
                 script {
                     sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment-dev.yaml"
                     sh "kubectl apply -f deployment-dev.yaml"
+                    sh "kubectl apply -f ingress.yaml"
+                    sh "kubectl apply -f pvc.yaml"
                 }
             }
         }
@@ -105,6 +107,8 @@ pipeline {
             steps {
                 script {
                     sh "kubectl get all"
+                    sh "kubectl get ingress"
+                    sh "kubectl get pvc"
                 }
             }
         }
