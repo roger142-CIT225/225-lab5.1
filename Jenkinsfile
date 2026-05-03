@@ -36,6 +36,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    sh "sed -i 's|BUILD_NUMBER_PLACEHOLDER|${IMAGE_TAG}|' index.html"
                     docker.build("${DOCKER_IMAGE}:${IMAGE_TAG}")
                 }
             }
@@ -60,10 +61,18 @@ pipeline {
             }
         }
 
-        stage('Acceptance Tests') {
+        stage('Health Check') {
             steps {
                 script {
                     sh "sleep 10"
+                    sh "curl -f http://10.48.229.161:32000 || error 'DEV health check failed'"
+                }
+            }
+        }
+
+        stage('Acceptance Tests') {
+            steps {
+                script {
                     sh "docker run --rm -v ${WORKSPACE}:/workdir joyzoursky/python-chromedriver:3.9-selenium python3 /workdir/selenium-test.py"
                 }
             }
