@@ -1,4 +1,4 @@
-# 225-lab5.1 — CIT225 Final CI/CD Pipeline
+# 225-lab5.1 - CIT225 Final CI/CD Pipeline
 
 ## Live Environments
 - **DEV:** http://10.48.229.161:32000
