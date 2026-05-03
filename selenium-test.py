@@ -10,8 +10,7 @@ driver = webdriver.Chrome(options=options)
 
 try:
     driver.get("http://10.48.229.161:32000")
-    assert "CIT225" in driver.title or "CI/CD" in driver.page_source, \
-        "Page content not found — acceptance test FAILED"
+    assert "CIT225" in driver.page_source, "Page content not found - acceptance test FAILED"
     print("Acceptance test PASSED:", driver.title)
 finally:
     driver.quit()
