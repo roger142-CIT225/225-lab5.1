@@ -17,6 +17,9 @@ spec:
         image: cithit/roger142:latest
         ports:
         - containerPort: 80
+        env:
+        - name: BUILD_NUMBER
+          value: "BUILD_NUMBER_PLACEHOLDER"
 ---
 apiVersion: v1
 kind: Service
