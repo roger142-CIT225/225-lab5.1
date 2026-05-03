@@ -20,6 +20,8 @@ spec:
         env:
         - name: BUILD_NUMBER
           value: "BUILD_NUMBER_PLACEHOLDER"
+        - name: ENV_NAME
+          value: "DEV"
 ---
 apiVersion: v1
 kind: Service
